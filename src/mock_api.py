@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from werkzeug import secure_filename
 
 
 app = Flask(__name__)
@@ -74,6 +75,25 @@ def getWidgetsOfUser(username):
         ])
     else:
         return "no widget found"
+
+
+@app.route('/addPictures', methods=["POST"])
+def addPictures():
+    number_of = int(request.form['numberOf'])
+    username = request.form['username']
+    print(username)
+    print(number_of)
+    for x in range(1, number_of + 1):
+        save_image(request.files[str(x)], '', str(x))
+
+    return "Pictures successfully added", 201
+
+
+def save_image(img, directory, name):
+    path = secure_filename(name)
+    path = directory + '/' + path
+    img.save(name)
+    return path
 
 
 if __name__ == "__main__":
