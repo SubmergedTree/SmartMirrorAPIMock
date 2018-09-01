@@ -19,7 +19,7 @@ def status():
 
 
 @app.route('/getUsers', methods=["GET"])
-def getUsers():
+def get_users():
     return jsonify([{"name": "Smith",
                      "prename": "John",
                       "username": "jsmith"
@@ -32,7 +32,7 @@ def getUsers():
 
 
 @app.route('/getWidgetsOfUser', methods=["GET"])
-def getWidgetsOfUser(username):
+def get_widgets_of_user(username):
     if username == "jsmith":
         return jsonify([
             {
@@ -78,15 +78,34 @@ def getWidgetsOfUser(username):
 
 
 @app.route('/addPictures', methods=["POST"])
-def addPictures():
+def add_pictures():
     number_of = int(request.form['numberOf'])
     username = request.form['username']
     print(username)
     print(number_of)
-    for x in range(1, number_of + 1):
-        save_image(request.files[str(x)], '', str(x))
+    print(request.files)
+    print(request.form)
+    save_image(request.files[str(1)], "", str(1))
+   # for x in range(1, number_of + 1):
+   #     save_image(request.files[str(x)], '', str(x))
+    return jsonify({"status": "ok"}), 201
 
-    return "Pictures successfully added", 201
+
+@app.route('/newUser', methods=["POST"])
+def new_user():
+    username = request.form['username']
+    name = request.form['name']
+    prename = request.form['prename']
+    print(username)
+    print(name)
+    print(prename)
+    save_image(request.files[str(1)], "", str(1))
+
+
+@app.route('/deleteUser', methods=["DELETE"])
+def delete_user():
+    user_to_delete = request.form['username']
+    print(user_to_delete)
 
 
 def save_image(img, directory, name):
