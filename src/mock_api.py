@@ -100,12 +100,14 @@ def new_user():
     print(name)
     print(prename)
     save_image(request.files[str(1)], "", str(1))
+    return jsonify({"status": "ok"}), 201
 
 
 @app.route('/deleteUser', methods=["DELETE"])
 def delete_user():
     user_to_delete = request.form['username']
     print(user_to_delete)
+    return jsonify({"status": "ok"}), 201
 
 
 def save_image(img, directory, name):
